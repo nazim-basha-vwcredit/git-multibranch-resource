@@ -47,12 +47,16 @@ if [ -z "$uri" ]; then
   exit 1
 fi
 
+echo "cd $source"
 cd $source
+echo "cd $source succeeded"
 
 if [ -z "$branch" ]; then
+  echo "inside if condition if [-z "$branch"]"
   branch=$(git -C $repository config --local concourse-ci.branch-name)
   echo "Branch name: $branch"
 fi
+
 if [ -z "$branch" ]; then
   echo "invalid payload (missing branch)"
   exit 1
