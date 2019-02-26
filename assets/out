@@ -40,7 +40,7 @@ echo $tag
 echo $tag_prefix
 echo $rebase
 echo $only_tag
-$payload
+echo $payload
 
 if [ -z "$uri" ]; then
   echo "invalid payload (missing uri)"
