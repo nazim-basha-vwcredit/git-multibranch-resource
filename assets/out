@@ -73,8 +73,19 @@ if [ -n "$tag" ]; then
   tag_name="$(cat $tag)"
 fi
 
+echo $uri
+echo $branch
+echo $repository
+echo $tag
+echo $tag_prefix
+echo $rebase
+echo $only_tag
+echo $payload
+
+echo "cd $repository" 
 cd $repository
-echo $PWD
+echo "current directory $PWD"
+
 ls -l
 
 tag() {
