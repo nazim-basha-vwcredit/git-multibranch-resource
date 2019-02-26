@@ -51,6 +51,9 @@ echo "cd $source"
 cd $source
 echo "cd $source succeeded"
 
+ls -l
+ls -l ../
+
 if [ -z "$branch" ]; then
   echo "inside if condition if [-z "$branch"]"
   echo "PWD: $PWD"
