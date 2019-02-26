@@ -33,6 +33,14 @@ tag_prefix=$(jq -r '.params.tag_prefix // ""' < $payload)
 rebase=$(jq -r '.params.rebase // false' < $payload)
 only_tag=$(jq -r '.params.only_tag // false' < $payload)
 
+echo $uri
+echo $branch
+echo $repository
+echo $tag
+echo $tag_prefix
+echo $rebase
+echo $only_tag
+
 if [ -z "$uri" ]; then
   echo "invalid payload (missing uri)"
   exit 1
@@ -42,6 +50,7 @@ cd $source
 
 if [ -z "$branch" ]; then
   branch=$(git -C $repository config --local concourse-ci.branch-name)
+  echo $branch
 fi
 if [ -z "$branch" ]; then
   echo "invalid payload (missing branch)"
