@@ -49,12 +49,9 @@ fi
 
 cd $source
 
-branch=$(git -C $repository config --local concourse-ci.branch-name)
-echo $branch
-
 if [ -z "$branch" ]; then
   branch=$(git -C $repository config --local concourse-ci.branch-name)
-  echo $branch
+  echo "Branch name: $branch"
 fi
 if [ -z "$branch" ]; then
   echo "invalid payload (missing branch)"
@@ -77,6 +74,8 @@ if [ -n "$tag" ]; then
 fi
 
 cd $repository
+echo $PWD
+ls -l
 
 tag() {
   if [ -n "$tag_name" ]; then
@@ -85,6 +84,7 @@ tag() {
 }
 
 push_src_and_tags() {
+  echo "push changes to HEAD:refs/heads/$branch"
   git push --tags push-target HEAD:refs/heads/$branch
 }
 
@@ -93,6 +93,7 @@ push_tags() {
 }
 
 git remote add push-target $uri
+echo "added remove target"
 
 if [ "$only_tag" = "true" ]; then
   tag
