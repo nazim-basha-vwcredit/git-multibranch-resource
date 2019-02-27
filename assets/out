@@ -104,12 +104,27 @@ tag() {
 }
 
 push_src_and_tags() {
-  echo "push changes to HEAD:refs/heads/$branch"
-  git push --tags push-target HEAD:refs/heads/$branch
+  
+	# Below command to disable strict host checking for git clone interactive questions
+	# http://debuggable.com/posts/disable-strict-host-checking-for-git-clone:49896ff3-0ac0-4263-9703-1eae4834cda3
+	mkdir -p ~/.ssh && echo -e "Host *\n StrictHostKeyChecking no\n UserKnownHostsFile=/dev/null" >> ~/.ssh/config            
+
+	echo "git pull"
+	git pull
+
+	echo "push changes to HEAD:refs/heads/$branch"
+	git push --tags push-target HEAD:refs/heads/$branch
 }
 
 push_tags() {
-  git push --tags push-target
+	# Below command to disable strict host checking for git clone interactive questions
+	# http://debuggable.com/posts/disable-strict-host-checking-for-git-clone:49896ff3-0ac0-4263-9703-1eae4834cda3
+	mkdir -p ~/.ssh && echo -e "Host *\n StrictHostKeyChecking no\n UserKnownHostsFile=/dev/null" >> ~/.ssh/config            
+
+	echo "git pull"
+	git pull
+
+	git push --tags push-target
 }
 
 git remote add push-target $uri
