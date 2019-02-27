@@ -27,6 +27,14 @@ paths="$(jq -r '(.source.paths // ["."])[]' < $payload)" # those "'s are importa
 ignore_paths="$(jq -r '":!" + (.source.ignore_paths // [])[]' < $payload)" # these ones too
 last_refs=$(jq -r '.version.ref // ""' < $payload)
 
+echo $uri
+echo $branch
+echo $branches
+echo $ignore_branches
+echo $paths
+echo $ignore_paths
+echo $last_refs
+
 ## Redis stuff to support cleaner multibranch behaviour
 redis_host=$(jq -r '.source.redis.host // ""' < $payload)
 if [ -n "$redis_host" ] ; then
@@ -77,6 +85,7 @@ filter_branches() {
 
 get_refs() {
   local ref="$1"
+  echo "ref $ref"
   git log --grep '\[ci skip\]' --invert-grep --format='%H' $(log_range $ref) $(paths_search "$paths" "$ignore_paths")
 }
 
@@ -149,7 +158,9 @@ INLINE
       # Found a new branch, therefore it must have changed
       changed_branch="$branch"
     fi
-
+	
+	echo "changed_branch $changed_branch"
+	
     # Check if candidate branch contains any acceptable commits
     if [ -n "$changed_branch" ] ; then
       git checkout $changed_branch >&2
@@ -229,8 +240,10 @@ else
 fi
 
 if [ -z "$branches" ] ; then
+  echo "get_refs $last_refs"
   results="$(get_refs "$last_refs")"
 else
+  echo "get_branch_refs"
   results="$(get_branch_refs)"
 fi
 
